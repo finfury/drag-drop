@@ -11,6 +11,54 @@ function isMobileDevice() {
 function initControl(control) {
     const pickItemsNodes = control.getElementsByClassName('pick-item')
     const controlBox = Array.from(control.getElementsByClassName('control__box'))
+    const controlActions = Array.from(control.getElementsByClassName('control__management'))
+    controlActions.forEach(actionBlock => {
+        const prevElem = actionBlock.previousElementSibling
+        const nextElem = actionBlock.nextElementSibling
+        const rightButton = actionBlock.querySelector("button.control__actions_right")
+        const rightAllButton = actionBlock.querySelector('button.control__actions_right-all')
+        const leftAllButton = actionBlock.querySelector('button.control__actions_left-all')
+        const leftButton = actionBlock.querySelector('button.control__actions_left')
+        let prevWindow, nextWindow, prevActiveItems, nextActiveItems
+
+        if (prevElem) {
+            prevWindow = prevElem.querySelector('ul.pick-list')
+        }
+        if (nextElem) {
+            nextWindow = nextElem.querySelector('ul.pick-list')
+        }
+
+
+        rightButton.addEventListener('click', (event) => {
+            prevActiveItems = Array.from(prevWindow.getElementsByClassName('pick-item active'))
+            prevActiveItems?.forEach(elem => {
+                elem.classList.remove('active')
+                nextWindow.appendChild(elem)
+            })
+        })
+        rightAllButton?.addEventListener('click', (event) => {
+            let prevItems = Array.from(prevWindow.getElementsByClassName('pick-item'))
+            prevItems?.forEach(elem => {
+                elem.classList.remove('active')
+                nextWindow.appendChild(elem)
+            })
+        })
+        leftAllButton?.addEventListener('click', (event) => {
+            // let nextItems = Array.from(nextWindow.getElementsByClassName('pick-item active'))
+            // nextItems?.forEach(elem => {
+            //     elem.classList.remove('active')
+            //     prevWindow.appendChild(elem)
+            // })
+        })
+        leftButton?.addEventListener('click', (event) => {
+            // nextActiveItems = Array.from(prevWindow.getElementsByClassName('pick-item active'))
+            // nextActiveItems?.forEach(elem => {
+            //     elem.classList.remove('active')
+            //     prevWindow.appendChild(elem)
+            // })
+        })
+    })
+
     controlBox.forEach(box => {
         const list = box.querySelector('ul.pick-list')
         const activeItemsNodes = box.getElementsByClassName('pick-item active')
@@ -94,7 +142,6 @@ function initControl(control) {
         })
     })
 
-
     const pickItems = Array.from(pickItemsNodes)
     pickItems.forEach(item => {
         const startToDragNameEvent = isMobile ? "touchstart" : "mousedown"
@@ -124,17 +171,6 @@ function initControl(control) {
                 shiftY = event.clientY - item.getBoundingClientRect().top;
             }
 
-            // Позиционируем элемент рядом с курсором
-            item.style.position = 'absolute';
-            item.style.zIndex = '5';
-            if (isMobile) {
-                item.style.left = event.touches[0].pageX - shiftX + 'px'
-                item.style.top = event.touches[0].pageY - shiftY + 'px'
-            } else {
-                item.style.left = event.pageX - shiftX + 'px';
-                item.style.top = event.pageY - shiftY + 'px';
-            }
-
             const onCursorMove = (event) => {
                 moveItem(event, shiftX, shiftY)
             }
@@ -151,6 +187,8 @@ function initControl(control) {
 
         const moveItem = (event, shiftX, shiftY) => {
             // Позиционируем элемент всегда рядом с курсором
+            item.style.position = 'absolute';
+            item.style.zIndex = '5';
             if (isMobile) {
                 item.style.left = event.touches[0].pageX - shiftX + 'px'
                 item.style.top = event.touches[0].pageY - shiftY + 'px'

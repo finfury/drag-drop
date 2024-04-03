@@ -1,0 +1,21 @@
+$blue: #3B82F6;
+$text: #374151;
+$grey: #e5e7eb;
+
+.pick-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: $blue;
+    font-size: 1rem;
+    border: 1px solid $blue;
+
+    &:disabled {
+        background-color: rgba($blue, 0.5);
+        border: 1px solid rgba($blue, 0.5);
+    }
+}

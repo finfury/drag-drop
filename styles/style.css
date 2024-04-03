@@ -1,0 +1,106 @@
+.pick-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #3B82F6;
+  font-size: 1rem;
+  border: 1px solid #3B82F6;
+}
+.pick-button:disabled {
+  background-color: rgba(59, 130, 246, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+}
+
+.wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  grid-gap: 1.25rem;
+}
+
+.control__box {
+  flex: 1 1 auto;
+  display: flex;
+  align-content: center;
+  grid-gap: 1.25rem;
+}
+
+.control__actions {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 0.5rem;
+  justify-content: center;
+}
+
+.control__window {
+  flex: 1 1 auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+.control__window_title {
+  font-size: 21px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
+  color: #374151;
+  padding: 1.5rem;
+}
+
+.pick-list {
+  padding: 0.25rem 0;
+  height: 30rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.pick-list::-webkit-scrollbar {
+  width: 4px;
+}
+.pick-list::-webkit-scrollbar-thumb {
+  background-color: #374151;
+  border-radius: 6px;
+}
+
+.pick-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.25rem;
+  user-select: none;
+}
+@media (hover: hover) {
+  .pick-item:hover {
+    cursor: cell;
+  }
+}
+
+.pick-item__img {
+  border-radius: 6px;
+  width: 4rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.031372549), 0 0 2px rgba(0, 0, 0, 0.0588235294), 0 2px 6px rgba(0, 0, 0, 0.1215686275);
+}
+
+.pick-item__text {
+  flex: 1 1 auto;
+  font-weight: 700;
+  padding: 0 0.5rem;
+}
+
+.pick-item__price {
+  font-weight: 700;
+}
+
+/*# sourceMappingURL=style.css.map */

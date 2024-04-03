@@ -1,0 +1,109 @@
+@import './components';
+
+.wrapper {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    grid-gap: 1.25rem;
+}
+
+.control__box {
+    flex: 1 1 auto;
+    display: flex;
+    align-content: center;
+    grid-gap: 1.25rem;
+}
+
+.control__actions {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 0.5rem;
+    justify-content: center;
+}
+
+.control__actions_up {
+}
+
+.control__actions_header {
+}
+
+.control__actions_bottom {
+}
+
+.control__actions_down {
+}
+
+.control__window {
+    flex: 1 1 auto;
+    border: 1px solid $grey;
+    border-radius: 6px;
+}
+
+.control__window_title {
+    font-size: 21px;
+    border-bottom: 1px solid $grey;
+    font-weight: 700;
+    color: $text;
+    padding: 1.5rem;
+}
+
+.pick-list {
+    padding: 0.25rem 0;
+    height: 30rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $text;
+        border-radius: 6px;
+    }
+}
+
+.pick-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.25rem;
+    user-select: none;
+    @media (hover: hover) {
+        &:hover {
+            cursor: cell;
+        }
+    }
+}
+
+.pick-item__img {
+    border-radius: 6px;
+    width: 4rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px #00000008, 0 0 2px #0000000f, 0 2px 6px #0000001f;
+}
+
+.pick-item__text {
+    flex: 1 1 auto;
+    font-weight: 700;
+    padding: 0 0.5rem;
+}
+
+.pick-item__price {
+    font-weight: 700;
+}
+
+.control__management {
+}
+
+.control__management_btn {
+}

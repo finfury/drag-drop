@@ -80,6 +80,9 @@
   padding: 0.8rem 1.25rem;
   user-select: none;
 }
+.pick-item.active {
+  background-color: grey;
+}
 @media (hover: hover) {
   .pick-item:hover {
     cursor: cell;

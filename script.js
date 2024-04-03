@@ -9,8 +9,93 @@ function isMobileDevice() {
 }
 
 function initControl(control) {
+    const pickItemsNodes = control.getElementsByClassName('pick-item')
+    const controlBox = Array.from(control.getElementsByClassName('control__box'))
+    controlBox.forEach(box => {
+        const list = box.querySelector('ul.pick-list')
+        const activeItemsNodes = box.getElementsByClassName('pick-item active')
+        const items = box.getElementsByClassName('pick-item')
+        const upButton = box.querySelector('button.control__actions_up')
+        const headerButton = box.querySelector('button.control__actions_header')
+        const bottomButton = box.querySelector('button.control__actions_bottom')
+        const downButton = box.querySelector('button.control__actions_down')
 
-    const pickItems = Array.from(control.getElementsByClassName('pick-item'))
+        for (let i = 0; i < items.length; i++) {
+            items[i].addEventListener('click', (event) => event.currentTarget.classList.toggle('active'))
+        }
+
+        upButton.addEventListener('click', (event) => {
+            let start = items.length - 1;
+            const sortedItems = Array.from(items)
+
+            for (; start > 0; start--) {
+                let prev = sortedItems[start - 1]
+                let next = sortedItems[start]
+                if (next.className.includes('active') && prev.className.includes('active')) continue;
+                if (next.className.includes('active') && !prev.className.includes('active')) {
+                    [sortedItems[start - 1], sortedItems[start]] = [sortedItems[start], sortedItems[start - 1]]
+                    start--
+                }
+            }
+            list.innerHTML = ''
+            sortedItems.forEach(el => {
+                list.appendChild(el)
+                el.classList.remove('active')
+            })
+        })
+        headerButton.addEventListener('click', (event) => {
+            const allItems = Array.from(items)
+            const activeItems = Array.from(activeItemsNodes)
+            const sortedItems = allItems.sort((a, b) => {
+                if (activeItems.includes(a) && activeItems.includes(b)) return 0
+                if (activeItems.includes(a)) return -1
+                if (activeItems.includes(b)) return 1
+                return 0
+            })
+            list.innerHTML = ''
+            sortedItems.forEach(el => {
+                list.appendChild(el)
+                el.classList.remove('active')
+            })
+        })
+        bottomButton.addEventListener('click', (event) => {
+            const allItems = Array.from(items)
+            const activeItems = Array.from(activeItemsNodes)
+            const sortedItems = allItems.sort((a, b) => {
+                if (activeItems.includes(a) && activeItems.includes(b)) return 0
+                if (activeItems.includes(a)) return 1
+                if (activeItems.includes(b)) return -1
+                return 0
+            })
+            list.innerHTML = ''
+            sortedItems.forEach(el => {
+                list.appendChild(el)
+                el.classList.remove('active')
+            })
+        })
+        downButton.addEventListener('click', (event) => {
+            let start = 0;
+            const sortedItems = Array.from(items)
+
+            for (; start < sortedItems.length - 1; start++) {
+                let prev = sortedItems[start]
+                let next = sortedItems[start + 1]
+                if (prev.className.includes('active') && next.className.includes('active')) continue;
+                if (prev.className.includes('active') && !next.className.includes('active')) {
+                    [sortedItems[start], sortedItems[start + 1]] = [sortedItems[start + 1], sortedItems[start]]
+                    start++
+                }
+            }
+            list.innerHTML = ''
+            sortedItems.forEach(el => {
+                list.appendChild(el)
+                el.classList.remove('active')
+            })
+        })
+    })
+
+
+    const pickItems = Array.from(pickItemsNodes)
     pickItems.forEach(item => {
         const startToDragNameEvent = isMobile ? "touchstart" : "mousedown"
         const moveNameEvent = isMobile ? "touchmove" : "mousemove"
@@ -43,11 +128,9 @@ function initControl(control) {
             item.style.position = 'absolute';
             item.style.zIndex = '5';
             if (isMobile) {
-                console.log(event.touches[0])
                 item.style.left = event.touches[0].pageX - shiftX + 'px'
                 item.style.top = event.touches[0].pageY - shiftY + 'px'
             } else {
-                console.log(event)
                 item.style.left = event.pageX - shiftX + 'px';
                 item.style.top = event.pageY - shiftY + 'px';
             }

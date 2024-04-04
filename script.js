@@ -19,7 +19,10 @@ function initControl(control) {
         const rightAllButton = actionBlock.querySelector('button.control__actions_right-all')
         const leftAllButton = actionBlock.querySelector('button.control__actions_left-all')
         const leftButton = actionBlock.querySelector('button.control__actions_left')
-        let prevWindow, nextWindow, prevActiveItems, nextActiveItems
+        let prevWindow,
+            nextWindow,
+            prevActiveItems,
+            nextActiveItems
 
         if (prevElem) {
             prevWindow = prevElem.querySelector('ul.pick-list')
@@ -68,23 +71,18 @@ function initControl(control) {
         const bottomButton = box.querySelector('button.control__actions_bottom')
         const downButton = box.querySelector('button.control__actions_down')
 
-        for (let i = 0; i < items.length; i++) {
-            items[i].addEventListener('click', (event) => event.currentTarget.classList.toggle('active'))
-        }
-
         upButton.addEventListener('click', (event) => {
-            let start = items.length - 1;
             const sortedItems = Array.from(items)
-
-            for (; start > 0; start--) {
-                let prev = sortedItems[start - 1]
-                let next = sortedItems[start]
-                if (next.className.includes('active') && prev.className.includes('active')) continue;
-                if (next.className.includes('active') && !prev.className.includes('active')) {
-                    [sortedItems[start - 1], sortedItems[start]] = [sortedItems[start], sortedItems[start - 1]]
-                    start--
+            for (let i = 1; i < sortedItems.length; i++) {
+                if (!sortedItems[i - 1].className.includes('active') && sortedItems[i].className.includes('active')) {
+                    [sortedItems[i - 1], sortedItems[i]] = [sortedItems[i], sortedItems[i - 1]]
+                    continue
+                }
+                if (sortedItems[i - 1].className.includes('active')) {
+                    continue
                 }
             }
+
             list.innerHTML = ''
             sortedItems.forEach(el => {
                 list.appendChild(el)
@@ -122,7 +120,23 @@ function initControl(control) {
             })
         })
         downButton.addEventListener('click', (event) => {
-            let start = 0;
+            const sortedItems = Array.from(items)
+            for (let i = sortedItems.length - 1; i > 0; i--) {
+                if (!sortedItems[i].className.includes('active') && sortedItems[i - 1].className.includes('active')) {
+                    [sortedItems[i - 1], sortedItems[i]] = [sortedItems[i], sortedItems[i - 1]]
+                    continue
+                }
+                if (sortedItems[i].className.includes('active')) {
+                    continue
+                }
+            }
+
+            list.innerHTML = ''
+            sortedItems.forEach(el => {
+                list.appendChild(el)
+                el.classList.remove('active')
+            })
+            /*let start = 0;
             const sortedItems = Array.from(items)
 
             for (; start < sortedItems.length - 1; start++) {
@@ -138,7 +152,7 @@ function initControl(control) {
             sortedItems.forEach(el => {
                 list.appendChild(el)
                 el.classList.remove('active')
-            })
+            })*/
         })
     })
 
@@ -150,6 +164,12 @@ function initControl(control) {
         let targetList = null;
         let currentDroppable = null;
 
+        item.addEventListener('click', toggleActive)
+
+        function toggleActive(event) {
+            console.log('toggle Active class')
+            event.currentTarget.classList.toggle('active')
+        }
         if (isMobile) {
             item.addEventListener(startToDragNameEvent, holdDownHandler)
         } else {
@@ -178,7 +198,9 @@ function initControl(control) {
             document.addEventListener(moveNameEvent, onCursorMove);
             document[upEventName] = () => {
                 item.style.position = 'static';
-                if (targetList) targetList.prepend(item)
+                if (targetList) {
+                    targetList.prepend(item)
+                }
 
                 document.removeEventListener(moveNameEvent, onCursorMove);
                 document[upEventName] = null

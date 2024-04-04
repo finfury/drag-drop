@@ -44,18 +44,18 @@ function initControl(control) {
             })
         })
         leftAllButton?.addEventListener('click', (event) => {
-            // let nextItems = Array.from(nextWindow.getElementsByClassName('pick-item active'))
-            // nextItems?.forEach(elem => {
-            //     elem.classList.remove('active')
-            //     prevWindow.appendChild(elem)
-            // })
+            let nextItems = Array.from(nextWindow.getElementsByClassName('pick-item'))
+            nextItems?.forEach(elem => {
+                elem.classList.remove('active')
+                prevWindow.appendChild(elem)
+            })
         })
         leftButton?.addEventListener('click', (event) => {
-            // nextActiveItems = Array.from(prevWindow.getElementsByClassName('pick-item active'))
-            // nextActiveItems?.forEach(elem => {
-            //     elem.classList.remove('active')
-            //     prevWindow.appendChild(elem)
-            // })
+            nextActiveItems = Array.from(nextWindow.getElementsByClassName('pick-item active'))
+            nextActiveItems?.forEach(elem => {
+                elem.classList.remove('active')
+                prevWindow.insertAdjacentElement("afterbegin", elem)
+            })
         })
     })
 
